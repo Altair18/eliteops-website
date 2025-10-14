@@ -18,8 +18,8 @@ export async function POST(req: Request) {
     }
 
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || "smtp.gmail.com",
-      port: Number(process.env.SMTP_PORT || 587),
+      host: "smtp.gmail.com",
+      port: 587,
       secure: process.env.SMTP_SECURE === "true", // true for 465
       auth: { user, pass },
     });
@@ -40,7 +40,32 @@ export async function POST(req: Request) {
     });
 
     if (!info.messageId) {
-      return NextResponse.json({ ok: false, error: "Email not sent" }, { status: 500 });
+      return NextResponse.json({ ok: false, error: "Owner email not sent" }, { status: 500 });
+    }
+
+    // Send confirmation email to the person who submitted the form
+    const confirmText = `Hi ${name},
+
+        Thank you for reaching out. This is a confirmation that we received your message:
+
+        ${message}
+
+        We will get back to you as soon as possible.
+
+        — The Team`;
+
+    const confirmInfo = await transporter.sendMail({
+      from: `"Website contact" <${user}>`,
+      to: email,
+      subject: `Thanks for contacting us, ${name}`,
+      text: confirmText,
+    });
+
+    if (!confirmInfo.messageId) {
+      // Owner email was sent but confirmation failed; log and still return success to user input
+      console.error('Confirmation email failed to send', { owner: info, confirm: confirmInfo });
+      // You can choose to return an error here; returning success but noting the warning.
+      return NextResponse.json({ ok: true, warning: 'confirmation_not_sent' }, { status: 200 });
     }
 
     return NextResponse.json({ ok: true }, { status: 200 });
