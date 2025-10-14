@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { supabase } from '@/lib/supabaseClient'
+import nodemailer from 'nodemailer'
 
 export default function ContactForm() {
   const [form, setForm] = useState({ name: '', email: '', company: '', message: '' })
@@ -8,9 +8,35 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const { error } = await supabase.from('leads').insert([form])
-    setStatus(error ? '❌ Failed to send' : '✅ Message sent!')
-    if (!error) setForm({ name: '', email: '', company: '', message: '' })
+    setStatus('Sending...')
+
+    try {
+      // Create a transporter object using SMTP transport
+      const transporter = nodemailer.createTransport({
+        service: 'Gmail', 
+        auth: {
+          user: process.env.SMTP_USER, 
+          pass: process.env.SMTP_PASS,
+        },
+        
+      })
+
+      // Send the email
+      const info = await transporter.sendMail({
+        from: form.email,
+        to: process.env.SMTP_USER,
+        subject: `Contact Form Submission from ${form.name}`,
+        text: JSON.stringify(form, null, 2),
+      })
+      
+      if (!info.messageId) throw new Error('Email not sent')
+
+      setStatus('✅ Message sent!')
+      setForm({ name: '', email: '', company: '', message: '' })
+    } catch (error) {
+      console.error('Error sending email:', error)
+      setStatus('❌ Failed to send')
+    }
   }
 
   return (

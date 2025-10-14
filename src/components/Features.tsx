@@ -7,7 +7,7 @@ export default function Features() {
 
   return (
     <section className="py-16 px-8 bg-white">
-      <h2 className="text-3xl font-semibold text-center mb-10">Why EliteOps?</h2>
+      <h2 className="text-3xl font-semibold text-center mb-10">Why Fivra?</h2>
       <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
         {items.map((item, i) => (
           <div key={i} className="p-6 rounded-2xl shadow-md border">
