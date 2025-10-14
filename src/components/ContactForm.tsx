@@ -1,6 +1,6 @@
+// ...existing code...
 'use client'
 import { useState } from 'react'
-import nodemailer from 'nodemailer'
 
 export default function ContactForm() {
   const [form, setForm] = useState({ name: '', email: '', company: '', message: '' })
@@ -11,25 +11,13 @@ export default function ContactForm() {
     setStatus('Sending...')
 
     try {
-      // Create a transporter object using SMTP transport
-      const transporter = nodemailer.createTransport({
-        service: 'Gmail', 
-        auth: {
-          user: process.env.SMTP_USER, 
-          pass: process.env.SMTP_PASS,
-        },
-        
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
       })
 
-      // Send the email
-      const info = await transporter.sendMail({
-        from: form.email,
-        to: process.env.SMTP_USER,
-        subject: `Contact Form Submission from ${form.name}`,
-        text: JSON.stringify(form, null, 2),
-      })
-      
-      if (!info.messageId) throw new Error('Email not sent')
+      if (!res.ok) throw new Error('Failed')
 
       setStatus('✅ Message sent!')
       setForm({ name: '', email: '', company: '', message: '' })
