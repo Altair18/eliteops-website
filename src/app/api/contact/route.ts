@@ -78,7 +78,7 @@ We will get back to you as soon as possible.
     }
 
     const confirmInfo = await transporter.sendMail({
-      from: `"Website contact" <${user}>`,
+      from: user,
       to: email,
       subject: `Thanks for contacting us, ${name}`,
       text: confirmTextPlain,
