@@ -52,7 +52,9 @@ export async function POST(req: Request) {
 
         We will get back to you as soon as possible.
 
-        — The Team`;
+        — The Fivra Team
+
+        <img src="https://fivra.co.uk/logo.jpg" alt="Fivra Logo" width="100" />`;
 
     const confirmInfo = await transporter.sendMail({
       from: `"Website contact" <${user}>`,
