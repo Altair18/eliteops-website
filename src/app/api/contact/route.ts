@@ -1,5 +1,7 @@
 import nodemailer from "nodemailer";
 import { NextResponse } from "next/server";
+import { join } from 'path';
+import { existsSync } from 'fs';
 
 export async function POST(req: Request) {
   try {
@@ -44,23 +46,44 @@ export async function POST(req: Request) {
     }
 
     // Send confirmation email to the person who submitted the form
-    const confirmText = `Hi ${name},
+    const confirmTextPlain = `Hi ${name},
 
-        Thank you for reaching out. This is a confirmation that we received your message:
+Thank you for reaching out. This is a confirmation that we received your message:
 
-        ${message}
+${message}
 
-        We will get back to you as soon as possible.
+We will get back to you as soon as possible.
 
-        — The Fivra Team
+— The Fivra Team`;
 
-        <img src="../public/logo.jpg" alt="Fivra Logo" width="100" />`;
+    // Prefer an absolute URL (set SITE_URL in env), otherwise embed the local public/logo.jpg as an attachment (cid)
+    const siteUrl = process.env.SITE_URL?.replace(/\/$/, '') || '';
+    const logoUrl = siteUrl ? `${siteUrl}/logo.jpg` : null;
+
+    const confirmHtml = `
+      <p>Hi ${name},</p>
+      <p>Thank you for reaching out. This is a confirmation that we received your message:</p>
+      <blockquote style="white-space:pre-wrap">${message}</blockquote>
+      <p>We will get back to you as soon as possible.</p>
+      <p>— The Fivra Team</p>
+      ${logoUrl ? `<p><img src="${logoUrl}" alt="Fivra Logo" width="100"/></p>` : `<p><img src="cid:fivra_logo" alt="Fivra Logo" width="100"/></p>`}
+    `;
+
+  const attachments: { filename: string; path: string; cid?: string }[] = [];
+    if (!logoUrl) {
+      const logoPath = join(process.cwd(), 'public', 'logo.jpg');
+      if (existsSync(logoPath)) {
+        attachments.push({ filename: 'logo.jpg', path: logoPath, cid: 'fivra_logo' });
+      }
+    }
 
     const confirmInfo = await transporter.sendMail({
       from: `"Website contact" <${user}>`,
       to: email,
       subject: `Thanks for contacting us, ${name}`,
-      text: confirmText,
+      text: confirmTextPlain,
+      html: confirmHtml,
+      attachments: attachments.length ? attachments : undefined,
     });
 
     if (!confirmInfo.messageId) {
