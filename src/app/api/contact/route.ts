@@ -56,9 +56,9 @@ We will get back to you as soon as possible.
 
 — The Fivra Team`;
 
-    // Prefer an absolute URL (set SITE_URL in env), otherwise embed the local public/logo.jpeg as an attachment (cid)
+    // Prefer an absolute URL (set SITE_URL in env), otherwise embed the local public/logo.png as an attachment (cid)
     const siteUrl = process.env.SITE_URL?.replace(/\/$/, '') || '';
-    const logoUrl = siteUrl ? `${siteUrl}/logo.jpg` : null;
+    const logoUrl = siteUrl ? `${siteUrl}/logo.png` : null;
 
     const confirmHtml = `
       <p>Hi ${name},</p>
@@ -71,9 +71,9 @@ We will get back to you as soon as possible.
 
   const attachments: { filename: string; path: string; cid?: string }[] = [];
     if (!logoUrl) {
-      const logoPath = join(process.cwd(), 'public', 'logo.jpeg');
+      const logoPath = join(process.cwd(), 'public', 'logo.png');
       if (existsSync(logoPath)) {
-        attachments.push({ filename: 'logo.jpeg', path: logoPath, cid: 'fivra_logo' });
+        attachments.push({ filename: 'logo.png', path: logoPath, cid: 'fivra_logo' });
       }
     }
 
