@@ -54,7 +54,7 @@ export async function POST(req: Request) {
 
         — The Fivra Team
 
-        <img src="https://fivra.co.uk/logo.jpg" alt="Fivra Logo" width="100" />`;
+        <img src="../public/logo.jpg" alt="Fivra Logo" width="100" />`;
 
     const confirmInfo = await transporter.sendMail({
       from: `"Website contact" <${user}>`,
