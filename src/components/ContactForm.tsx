@@ -34,7 +34,7 @@ export default function ContactForm() {
         <input placeholder="Name" value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="w-full border p-3 rounded-lg" required />
         <input placeholder="Email" type="email" value={form.email} onChange={e => setForm({...form, email: e.target.value})} className="w-full border p-3 rounded-lg" required />
         <input placeholder="Company" value={form.company} onChange={e => setForm({...form, company: e.target.value})} className="w-full border p-3 rounded-lg" />
-        <textarea placeholder="Message" value={form.message} onChange={e => setForm({...form, message: e.target.value})} className="w-full border p-3 rounded-lg" rows={4} />
+        <textarea placeholder="Message" value={form.message} onChange={e => setForm({...form, message: e.target.value})} className="w-full border p-3 rounded-lg" rows={4} required />
         <button className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800">Send</button>
         {status && <p className="text-center mt-2">{status}</p>}
       </form>
