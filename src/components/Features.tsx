@@ -1,21 +1,27 @@
 export default function Features() {
   const items = [
-    { title: "Save 10+ hours a week", desc: "Delegate repetitive tasks to your AI + human assistant." },
-    { title: "Human-in-the-loop accuracy", desc: "We double-check everything before it reaches you." },
-    { title: "Realtime dashboard", desc: "Track, approve, or reject AI outputs live." },
-  ]
+    { title: "Websites that convert", desc: "Fast and on brand sites that turn visitors into leads and sales." },
+    { title: "Funnels and landing pages", desc: "Clear messaging and frictionless steps for higher intent traffic." },
+    { title: "Analytics and growth", desc: "Tracking and experiments to scale what works." },
+  ];
 
   return (
-    <section className="py-16 px-8 bg-white">
-      <h2 className="text-3xl font-semibold text-center mb-10">Why Fivra?</h2>
-      <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-        {items.map((item, i) => (
-          <div key={i} className="p-6 rounded-2xl shadow-md border">
-            <h3 className="font-bold text-lg mb-2">{item.title}</h3>
-            <p className="text-gray-600">{item.desc}</p>
-          </div>
-        ))}
+    <section className="bg-[#F7F8FB] py-16 md:py-20">
+      <div className="mx-auto max-w-6xl px-6 md:px-8">
+        <h2 className="text-3xl md:text-4xl font-semibold text-[#003E9A] mb-10">
+          What we do
+        </h2>
+
+        <div className="grid md:grid-cols-3 gap-6">
+          {items.map((item) => (
+            <div key={item.title} className="rounded-2xl bg-white p-6 shadow-sm border border-slate-100">
+              <div className="h-1.5 w-20 rounded-full brand-gradient mb-5" />
+              <h3 className="text-xl font-semibold text-[#003E9A] mb-2">{item.title}</h3>
+              <p className="text-slate-600">{item.desc}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
-  )
+  );
 }
