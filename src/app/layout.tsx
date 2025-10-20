@@ -56,7 +56,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <Head>
+        
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+
         <Script
           id="org-jsonld"
           type="application/ld+json"
@@ -71,16 +75,11 @@ export default function RootLayout({
               logo: "https://fivra.co.uk/logo.png",
               image: "https://fivra.co.uk/logo.png",
               sameAs: [
-                "https://www.instagram.com/getfivra",
-                "https://www.linkedin.com/company/fivra",
+                "www.linkedin.com/in/fivra-ltd",
               ],
             }),
           }}
         />
-      </Head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
         {children}
       </body>
     </html>
