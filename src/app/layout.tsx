@@ -28,12 +28,7 @@ export const metadata: Metadata = {
     url: "https://fivra.co.uk",
     siteName: "Fivra",
     images: [
-      {
-        url: "https://fivra.co.uk/logo.png",
-        width: 1200,
-        height: 630,
-        alt: "Fivra",
-      },
+      '/images/logo.png'
     ],
     type: "website",
     locale: "en_GB",
