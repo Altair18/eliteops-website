@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description:
     "Your 24/7 Operations Assistant. Stop drowning in admin, we draft, you approve.",
   icons: {
-    icon: "./favicon.ico",
+    icon: '/favicon.ico',
   },
   openGraph: {
     title: "Fivra",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     siteName: "Fivra",
     images: [
       {
-        url: "./favicon.ico",
+        url: "https://fivra.co.uk/logo.png",
         width: 1200,
         height: 630,
         alt: "Fivra",
@@ -67,7 +67,7 @@ export default function RootLayout({
               logo: "https://fivra.co.uk/logo.png",
               image: "https://fivra.co.uk/logo.png",
               sameAs: [
-                "www.linkedin.com/in/fivra-ltd",
+                "https://www.linkedin.com/in/fivra-ltd",
               ],
             }),
           }}
