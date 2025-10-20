@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
+import { Head } from "next/document";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -55,23 +56,23 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Script
-          id="org-jsonld"
+      <Head>
+        <script
           type="application/ld+json"
-          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
               name: "Fivra",
               url: "https://fivra.co.uk",
-              logo: "https://fivra.co.uk/fivra-logo.png",
+              logo: "https://fivra.co.uk/logo.png",
             }),
           }}
         />
+      </Head>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         {children}
       </body>
     </html>
