@@ -57,15 +57,23 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <Head>
-        <script
+        <Script
+          id="org-jsonld"
           type="application/ld+json"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
+              "@id": "https://fivra.co.uk/#organization",
               name: "Fivra",
               url: "https://fivra.co.uk",
               logo: "https://fivra.co.uk/logo.png",
+              image: "https://fivra.co.uk/logo.png",
+              sameAs: [
+                "https://www.instagram.com/getfivra",
+                "https://www.linkedin.com/company/fivra",
+              ],
             }),
           }}
         />
