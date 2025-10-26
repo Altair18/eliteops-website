@@ -1,7 +1,9 @@
-import type { Metadata } from "next";
+import { ThemeProvider } from "@/components/theme-provider";
+import { constructMetadata } from "@/lib/construct-metadata";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Script from "next/script";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,61 +15,39 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://fivra.co.uk"),
-  title: "Fivra",
-  description:
-    "Your 24/7 Operations Assistant. Stop drowning in admin, we draft, you approve.",
-  icons: {
-    icon: '/favicon.ico',
-  },
-  openGraph: {
-    title: "Fivra",
-    description:
-      "Your 24/7 Operations Assistant. Stop drowning in admin, we draft, you approve.",
-    url: "https://fivra.co.uk",
-    siteName: "Fivra",
-    images: [
-      '/images/logo.png'
-    ],
-    type: "website",
-    locale: "en_GB",
-  }
+export const viewport: Viewport = {
+  themeColor: "black",
 };
 
-// app/layout.tsx
+export const metadata: Metadata = constructMetadata({
+  title: "Badget - Makes you save money",
+  description:
+    "Empower your financial management with AI-driven insights making tracking and optimizing your finances effortless.",
+});
+
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="en" suppressHydrationWarning>
-        
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      {/* <head>
+        <Script src="https://unpkg.com/react-scan/dist/auto.global.js" />
+      </head> */}
 
-        <Script
-          id="org-jsonld"
-          type="application/ld+json"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              "@id": "https://fivra.co.uk/#organization",
-              name: "Fivra",
-              url: "https://fivra.co.uk",
-              logo: "https://fivra.co.uk/logo.png",
-              image: "https://fivra.co.uk/logo.png",
-              sameAs: [
-                "https://www.linkedin.com/in/fivra-ltd",
-              ],
-            }),
-          }}
-        />
-        {children}
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans bg-background`}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );
