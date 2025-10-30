@@ -21,11 +21,10 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = constructMetadata({
-  title: "Badget - Makes you save money",
+  title: "Fivra - Work Smarter with AI",
   description:
-    "Empower your financial management with AI-driven insights making tracking and optimizing your finances effortless.",
+    "Empower your team's productivity with AI-driven workflow automation making task management, collaboration, and communication effortless.",
 });
-
 export default function RootLayout({
   children,
 }: Readonly<{
