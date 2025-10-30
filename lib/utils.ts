@@ -1,10 +1,12 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
 import * as Color from "color-bits";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
+
+// Helper function to convert any CSS color to rgba
 export const getRGBA = (
   cssColor: React.CSSProperties["color"],
   fallback: string = "rgba(180, 180, 180)",
