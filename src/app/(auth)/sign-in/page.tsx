@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import signUpImage from "@/app/img/signup.jpg";
+import signUpImage from "../../../../public/cta-background.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import * as z from "zod";
@@ -78,7 +78,21 @@ const SignUp: React.FC<SignInValue> = () => {
         <div className="h-screen w-full grid grid-cols-10 justify-center items-center">
             <div className="hidden lg:block lg:col-span-5 h-full bg-black relative">
                 <Image className="object-cover h-screen w-full object-top" alt="imageSignIn" src={signUpImage} />
-                <div className="absolute top-5 left-5">Fivra</div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
+                <div className="absolute inset-0 p-8 flex items-center justify-center">
+                    <div className="w-full max-w-xl rounded-xl border border-white/15 bg-white/10 backdrop-blur-md p-6 text-white shadow-2xl">
+                        <p className="text-lg font-semibold text-center leading-relaxed">
+                            Fivra is the best product experience I&apos;ve had in years. Not just tech — taste. From docs to latency to the URL structure that makes you think oh, that&apos;s obvious. Feels like every other platform should study how they built it. <span className="text-white/90">@fivra</span> I love you
+                        </p>
+                        <div className="mt-4 flex items-center justify-center gap-3">
+                            <Image src="/github-pic.png" alt="yatsiv_yuriy" className="h-8 w-8 rounded-full" width={32} height={32} />
+                            <div className="text-sm leading-tight">
+                                <p className="font-medium">yatsiv_yuriy</p>
+                                <p className="text-white/70">@fivra</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div className="relative col-span-10 lg:col-span-5 flex flex-col h-full w-full justify-center items-center">
                 <Button variant={"ghost"} className="absolute top-3 right-3" onClick={() => { router.push('/sign-up') }}> Register</Button>
