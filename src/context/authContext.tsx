@@ -43,6 +43,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setUser(result.data.user)
       }
     } catch (error) {
+      console.log(error);
       // Handle error
       clearUser();
     }
@@ -62,6 +63,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       }
     }
     catch(error){
+      console.log(error);
       // Handle error
       clearUser();
     }
@@ -77,6 +79,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       await fetchUser();
     }
     catch(error){
+      console.log(error);
       // Handle error
       clearUser();
     } 

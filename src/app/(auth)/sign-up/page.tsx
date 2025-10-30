@@ -51,6 +51,15 @@ const SignIn = () => {
     const [loading, setLoading] = React.useState<boolean>(false);
     const { user } = useAuth();
     const {handleError} = useAxiosErrorHandler();
+    const form = useForm<signUpValue>({
+        resolver: zodResolver(signUpForm),
+        defaultValues: {
+            email: "",
+            password: "",
+            firstName: "",
+            lastName: "",
+        }
+    })
     const onSubmit: SubmitHandler<signUpValue> = async (values: signUpValue) => {
         try {
             const name = values.lastName+" "+values.firstName;
@@ -81,15 +90,7 @@ const SignIn = () => {
     if (user !== null) {
         return null;  // Or a loading spinner can be returned
     }
-    const form = useForm<signUpValue>({
-        resolver: zodResolver(signUpForm),
-        defaultValues: {
-            email: "",
-            password: "",
-            firstName: "",
-            lastName: "",
-        }
-    })
+
     return (
         <div className="h-screen w-full grid grid-cols-10 justify-center items-center">
 			<div className="hidden lg:block lg:col-span-5 h-full bg-black relative">
@@ -100,10 +101,10 @@ const SignIn = () => {
 						{/* Card 1 */}
 						<div className="absolute left-1/2 -translate-x-1/2 top-4 w-[85%] rounded-xl border border-white/15 bg-white/10 backdrop-blur-md p-5 text-white shadow-2xl rotate-[-2deg]">
 							<p className="text-base font-semibold text-center leading-relaxed">
-								"Getting started with Fivra took minutes. Clean onboarding, smart defaults, and it just works. <span className="text-white/90">@fivra</span> makes setup feel effortless."
+								&quot;Getting started with Fivra took minutes. Clean onboarding, smart defaults, and it just works. <span className="text-white/90">@fivra</span> makes setup feel effortless.&quot;
 							</p>
 							<div className="mt-3 flex items-center justify-center gap-3 text-sm">
-								<img src="/github-pic.png" alt="sarah_ops" className="h-7 w-7 rounded-full" />
+								<Image src="/github-pic.png" alt="sarah_ops" className="h-7 w-7 rounded-full" width={28} height={28} />
 								<div className="leading-tight">
 									<p className="font-medium">sarah_ops</p>
 									<p className="text-white/70">@sarah_ops</p>
@@ -114,10 +115,10 @@ const SignIn = () => {
 						{/* Card 2 (overlapping) */}
 						<div className="absolute left-1/2 -translate-x-1/2 top-20 w-[78%] rounded-xl border border-white/15 bg-white/10 backdrop-blur-md p-5 text-white shadow-2xl rotate-[3deg]">
 							<p className="text-sm font-medium text-center leading-relaxed">
-								"Automations connected to Slack and Notion on day one. Zero glue code. Our team moves twice as fast."
+								&quot;Automations connected to Slack and Notion on day one. Zero glue code. Our team moves twice as fast.&quot;
 							</p>
 							<div className="mt-3 flex items-center justify-center gap-3 text-xs">
-								<img src="/github-pic.png" alt="dev_anto" className="h-6 w-6 rounded-full" />
+								<Image src="/github-pic.png" alt="dev_anto" className="h-6 w-6 rounded-full" width={24} height={24} />
 								<div className="leading-tight">
 									<p className="font-medium">dev_anto</p>
 									<p className="text-white/70">@dev_anto</p>
@@ -128,10 +129,10 @@ const SignIn = () => {
 						{/* Card 3 (topmost) */}
 						<div className="absolute left-1/2 -translate-x-1/2 top-36 w-[72%] rounded-xl border border-white/15 bg-white/10 backdrop-blur-md p-5 text-white shadow-2xl rotate-[-1deg]">
 							<p className="text-sm font-medium text-center leading-relaxed">
-								"The shared AI workspace keeps everyone aligned. Meetings are shorter, outcomes clearer. Big fan."
+								&quot;The shared AI workspace keeps everyone aligned. Meetings are shorter, outcomes clearer. Big fan.&quot;
 							</p>
 							<div className="mt-3 flex items-center justify-center gap-3 text-xs">
-								<img src="/github-pic.png" alt="maria_p" className="h-6 w-6 rounded-full" />
+								<Image src="/github-pic.png" alt="maria_p" className="h-6 w-6 rounded-full" width={24} height={24} />
 								<div className="leading-tight">
 									<p className="font-medium">maria_p</p>
 									<p className="text-white/70">@maria_p</p>
@@ -245,7 +246,7 @@ const SignIn = () => {
                     </div>
                     <div className="w-full">
                         <Button variant="outline" className="w-full space-x-2 text-md"> 
-                        <img width="25" height="25" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/>
+                        <Image width="25" height="25" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/>
                         Google 
                         </Button>
                     </div>

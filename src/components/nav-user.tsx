@@ -1,31 +1,31 @@
 "use client";
 
-import {
-  IconCreditCard,
-  IconDotsVertical,
-  IconLogout,
-  IconNotification,
-  IconUserCircle,
-} from "@tabler/icons-react";
+// import {
+//   IconCreditCard,
+//   IconDotsVertical,
+//   IconLogout,
+//   IconNotification,
+//   IconUserCircle,
+// } from "@tabler/icons-react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+// import {
+//   DropdownMenu,
+//   DropdownMenuContent,
+//   DropdownMenuGroup,
+//   DropdownMenuItem,
+//   DropdownMenuLabel,
+//   DropdownMenuSeparator,
+//   DropdownMenuTrigger,
+// } from "@/components/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
+ // useSidebar,
 } from "@/components/ui/sidebar";
-import { useSession, signOut } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
+// import { useSession, signOut } from "@/lib/auth-client";
+// import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function NavUserSkeleton() {
@@ -46,36 +46,36 @@ export function NavUserSkeleton() {
 }
 
 export function NavUser() {
-  const { isMobile } = useSidebar();
-  const { data: session, isPending } = useSession();
-  const router = useRouter();
+  // const { isMobile } = useSidebar();
+  //const { data: session, isPending } = useSession();
+  // const router = useRouter();
 
-  const handleSignOut = async () => {
-    await signOut({
-      fetchOptions: {
-        onSuccess: () => {
-          router.push("/sign-in");
-        },
-      },
-    });
-  };
+  // const handleSignOut = async () => {
+  //   // await signOut({
+  //   //   fetchOptions: {
+  //   //     onSuccess: () => {
+  //   //       router.push("/sign-in");
+  //   //     },
+  //   //   },
+  //   // });
+  // };
 
   // Show skeleton while loading
-  if (isPending) {
-    return <NavUserSkeleton />;
-  }
+  // if (isPending) {
+  //   return <NavUserSkeleton />;
+  // }
 
-  // Don't render if no session
-  if (!session?.user) {
-    return null;
-  }
+  // // Don't render if no session
+  // if (!session?.user) {
+  //   return null;
+  // }
 
-  const user = session.user;
+  // const user = session.user;
 
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <DropdownMenu>
+        {/* <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
@@ -139,7 +139,7 @@ export function NavUser() {
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
       </SidebarMenuItem>
     </SidebarMenu>
   );

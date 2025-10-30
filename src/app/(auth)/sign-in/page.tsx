@@ -155,7 +155,7 @@ const SignUp: React.FC<SignInValue> = () => {
                     </div>
                     <div className="w-full">
                         <Button variant="outline" className="w-full space-x-2 text-md">
-                            <img width="25" height="25" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo" />
+                            <Image width="25" height="25" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo" />
                             Google
                         </Button>
                     </div>
