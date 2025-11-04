@@ -15,11 +15,12 @@ import {
     FormControl,
     FormMessage
 } from "@/components/ui/form";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "@/context/authContext";
 import axios from "axios";
 import { toast } from "sonner";
 import useAxiosErrorHandler from "@/hooks/axiosHandler";
+import { GoogleLogin, CredentialResponse } from '@react-oauth/google'
 
 const formSchema = z.object({
     email: z.string().email("Invalid email address").trim(),
@@ -32,10 +33,17 @@ const formSchema = z.object({
 type SignInValue = z.infer<typeof formSchema>;
 
 const SignUp: React.FC<SignInValue> = () => {
-    const { login, user } = useAuth();
+    const { user, refreshUser} = useAuth();
     const router = useRouter();
-    const {handleError} = useAxiosErrorHandler();
-    
+    const { handleError } = useAxiosErrorHandler();
+    const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+        return () => setMounted(false);
+    }, []);
+
     React.useEffect(() => {
         if (user !== null) {
             router.push('/');
@@ -58,14 +66,54 @@ const SignUp: React.FC<SignInValue> = () => {
             const result = await axios.post(`/api/Auth/signin`, values, { withCredentials: true });
             if (result.status === 200) {
                 toast.success(result.data.message);
-                login();  // Call the login function after successful login
+                refreshUser();  // Call the login function after successful login
             }
         } catch (error) {
             //handle Errors
             handleError(error);
-            
+
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {
+        if (!mounted) return; // Prevent state updates on unmounted component
+
+        try {
+            setIsGoogleLoading(true);
+
+            const result = await axios.post(
+                `/api/google`,
+                {
+                    token: credentialResponse.credential,
+                },
+                { withCredentials: true }
+            );
+
+            if (result.status === 201 || result.status === 200) {
+                toast.success("Login Successful!");
+                refreshUser();
+                router.push('/');
+                return;
+            }
+
+            toast.error(result.data.message);
+        } catch (error) {
+            console.log(error);
+            toast.error("Google sign-in failed.");
+        } finally {
+            if (mounted) {
+                setIsGoogleLoading(false);
+            }
+        }
+    };
+
+    const handleGoogleError = () => {
+        // Silently handle One Tap cancellations - don't show error toast
+        console.log("Google One Tap was dismissed or failed");
+        if (mounted) {
+            setIsGoogleLoading(false);
         }
     };
 
@@ -141,7 +189,7 @@ const SignUp: React.FC<SignInValue> = () => {
                                             </FormItem>
                                         )}
                                     />
-                                    <Button type="submit" variant={loading ? "secondary" : "default"} className="text-md">
+                                    <Button disabled={loading || isGoogleLoading} type="submit" variant={loading ? "secondary" : "default"} className="text-md">
                                         Log in with Email
                                     </Button>
                                 </div>
@@ -154,10 +202,26 @@ const SignUp: React.FC<SignInValue> = () => {
                         <div className="flex-grow bg-muted-foreground h-[0.5px]"></div>
                     </div>
                     <div className="w-full">
-                        <Button variant="outline" className="w-full space-x-2 text-md">
-                            <Image width="25" height="25" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo" />
-                            Google
-                        </Button>
+                        {mounted && (
+                            <div className="w-full">
+                                {isGoogleLoading || loading ? (
+                                    <Button type="button" disabled className="w-full">
+                                        {"Logging in..."}
+                                    </Button>
+                                ) : (
+                                    <GoogleLogin
+                                        onSuccess={handleGoogleSuccess}
+                                        onError={handleGoogleError}
+                                        useOneTap={false}
+                                        size="large"
+                                        text="signin_with"
+                                        shape="rectangular"
+                                        logo_alignment="left"
+                                        cancel_on_tap_outside={false}
+                                    />
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
