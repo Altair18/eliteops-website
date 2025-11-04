@@ -1,5 +1,4 @@
 export function generateWelcomeEmail(name: string, activationToken?: string) {
-    const subject = "🎉 Welcome to Fivra!";
     const activationLink = activationToken ? `https://fivra.co.uk/activate?token=${activationToken}` : null;
     
     return `

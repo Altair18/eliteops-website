@@ -72,7 +72,7 @@ export async function withAuthAdmin(req: NextRequest): Promise<NextResponse | nu
     );
   }
 
-  const decoded = req.user;
+  // const decoded = req.user;
 
   return null;
 }
